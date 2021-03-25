@@ -31,6 +31,7 @@ public class PatrolState : IState {
         SetTargetMovePosition ();
     }
     public void Update () {
+        //如果到达目标位置就回到Idle状态
         if (Vector3.Distance (characterBase.transform.position, targetMovePosition) < arrivedAtPositionMinDistance) {
             stateMachine.ChangeState (StateType.Idle);
         }
@@ -40,11 +41,12 @@ public class PatrolState : IState {
         StopMovePosition ();
     }
     public void SetTargetMovePosition () {
+        //设置随机移动位置
         targetMovePosition = startPosition + EveryFunction.GetRandomDir () * Random.Range (minRandomDistace, maxRandomDistance);
-        Debug.Log (targetMovePosition);
         isWalking = false;
     }
     public void StopMovePosition () {
+        //停止移动——将目标位置调整到自身脚下，运行一遍寻路，这样马上就会结束
         targetMovePosition = characterBase.transform.position;
         SetMovePosition();
     }

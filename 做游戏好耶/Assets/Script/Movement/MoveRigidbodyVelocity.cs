@@ -6,10 +6,14 @@ public class MoveRigidbodyVelocity : MonoBehaviour, IMoveVelocity {
     [SerializeField] private float moveSpeed;
     private Vector3 velocityVector;
     private new Rigidbody2D rigidbody;
+    private Animator animator;
     void Awake () {
         rigidbody = GetComponent<Rigidbody2D> ();
+        animator = GetComponent<Animator> ();
     }
     public void SetVelocity (Vector3 velocityVector) {
+        if (velocityVector != Vector3.zero) animator.SetBool ("isWalking", true);
+        else animator.SetBool ("isWalking", false);
         this.velocityVector = velocityVector;
     }
     void FixedUpdate () {

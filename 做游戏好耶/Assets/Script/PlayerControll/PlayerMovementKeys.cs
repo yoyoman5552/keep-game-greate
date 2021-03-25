@@ -4,6 +4,10 @@ using CodeMonkey;
 using UnityEngine;
 
 public class PlayerMovementKeys : MonoBehaviour {
+
+    private void OnEnable () {
+       
+    }
     private void Update () {
         if (Input.GetMouseButtonDown (0)) {
             CMDebug.TextPopupMouse ("Attack");

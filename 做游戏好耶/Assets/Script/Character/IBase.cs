@@ -10,8 +10,8 @@ public abstract class IBase : MonoBehaviour {
     protected new Rigidbody2D rigidbody;
     public virtual void ChangeSprite (float direction) {
         if (direction != 0) {
-            if (direction > 0) this.transform.localScale = new Vector3 (-1, 1, 1);
-            else this.transform.localScale = new Vector3 (1, 1, 1);
+            if (direction > 0) this.transform.localScale = new Vector3 (1, 1, 1);
+            else this.transform.localScale = new Vector3 (-1, 1, 1);
         }
     }
 }

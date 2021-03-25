@@ -12,7 +12,7 @@ public class MoveRoamRandom : MonoBehaviour {
     private Vector3 targetMovePosition;
     private bool isWalking;
     private void Awake () {
-       // startPosition = this.transform.position;
+       startPosition = this.transform.position;
     }
     private void Start () {
         randomDistanceX = (rightUpTransform.position.x - leftDownTransform.position.x) / 2;
