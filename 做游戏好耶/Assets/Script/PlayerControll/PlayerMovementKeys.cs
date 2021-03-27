@@ -9,9 +9,6 @@ public class PlayerMovementKeys : MonoBehaviour {
        
     }
     private void Update () {
-        if (Input.GetMouseButtonDown (0)) {
-            CMDebug.TextPopupMouse ("Attack");
-        }
         float moveX = 0f;
         float moveY = 0f;
         if (Input.GetKey (KeyCode.W)) moveY = +1f;

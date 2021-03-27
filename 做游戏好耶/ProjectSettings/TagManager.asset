@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Characterr
   - Player
   - Enemy
-  - 
+  - Skill
   - 
   - 
   - 
@@ -41,9 +42,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Character
+  - name: BackOfCharacter
     uniqueID: 4038333215
     locked: 0
-  - name: New Layer
+  - name: Character
     uniqueID: 319214597
+    locked: 0
+  - name: FrontOfCharacter
+    uniqueID: 1178368375
+    locked: 0
+  - name: UI
+    uniqueID: 2849064661
     locked: 0

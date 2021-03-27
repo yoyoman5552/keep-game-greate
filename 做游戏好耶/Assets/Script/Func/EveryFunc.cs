@@ -8,10 +8,24 @@ namespace EveryFunc {
         Patrol,
         Chase,
         React,
-        Attack
+        Attack,
+        Hurt,
+        Dead,
+
+        //以上为Character的StateType
+        //以下为Player的StateType
+        Gaming,
+        UI
+    }
+    //因为技能种类繁杂，不用damageType，使用模板化，对状态机来说他们不需要知道受到的是哪种类型的伤害
+    //这里本来有个DamageType,被删掉了，原因如上
+    public static class ConstantList { //常量列表
+        //短短的无敌时间，为了防止被同一次攻击伤害两次
+        public const float WUDITIME = 0.2f;
+        //被攻击时的颜色变化
+        public const float HURTCOLORTIME = 0.3f;
     }
     public static class EveryFunction {
-
         private static int sortingOrder = 1;
         private static PathFinding pathFinding;
         public static PathFinding PathFind {
@@ -23,10 +37,10 @@ namespace EveryFunc {
                 return pathFinding;
             }
         }
-        public static Vector3 GetMouseWorldPosition () {
+        public static Vector3 GetMouseWorldPosition () { //获得鼠标位置
             return GetMouseWorldPositionWithZ (Input.mousePosition);
         }
-        public static Vector3 GetMouseWorldPositionWithZ (Vector3 screenPosition) {
+        public static Vector3 GetMouseWorldPositionWithZ (Vector3 screenPosition) { //从屏幕位置上获得世界位置
             return Camera.main.ScreenToWorldPoint (screenPosition);
         }
         public static TextMesh CreateWorldText (string text, Transform parent = null, Vector3 localPosition = default (Vector3), int fontsize = 35, Color color = default (Color), TextAnchor textAnchor = default (TextAnchor), TextAlignment textAlignment = default (TextAlignment)) {
@@ -73,6 +87,18 @@ namespace EveryFunc {
         public static Vector3 GetRandomDir () { //随机方向的单位向量（Vector3）
             return new Vector3 (UnityEngine.Random.Range (-1f, 1f), UnityEngine.Random.Range (-1f, 1f)).normalized;
         }
-
+        public static float GetAngleOfMouseAndTransform (Transform originalTransform) { //计算鼠标和目标位置朝向之间的夹角
+            return GetAngleOfTransform (originalTransform.position, GetMouseWorldPosition ());
+        }
+        public static float GetAngleOfTransform (Vector3 originalPosition, Vector3 targetPosition) { //计算目标位置和原位置朝向之间的夹角
+            //物体转向
+            Vector3 attackDirection = targetPosition - originalPosition;
+            //返回计算的角度（Z轴）
+            return Mathf.Atan2 (attackDirection.y, attackDirection.x) * Mathf.Rad2Deg; //Mathf.Rad2Deg:弧度转角度
+        }
+        public static Vector3 GetNormalDirection (Vector3 originalPosition, Vector3 targetPosition) {
+            //获得从originalPosition到targetPosition的单位向量
+            return (targetPosition - originalPosition).normalized;
+        }
     }
 }

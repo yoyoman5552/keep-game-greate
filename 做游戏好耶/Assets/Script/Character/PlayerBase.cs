@@ -1,36 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using EveryFunc;
 using UnityEngine;
-
 public class PlayerBase : IBase {
     /*
     PlayerBase：玩家属性
-    Ibase属性：health、m_health、MaxHealth
+    Ibase属性：health、health、MaxHealth
     */
-    [SerializeField] private float InvisibleTime;
-    private bool isInvisible; //是否无敌
     private float invisibletimer;
-    // Start is called before the first frame update
-    void Awake () {
-        m_health = MaxHealth;
-        rigidbody = GetComponent<Rigidbody2D> ();
-    }
 
+    void Awake () {
+        //基类初始化
+        IBaseInit ();
+    }
+    private void Start () {
+        //获取gamingState
+        stateMachine = GetComponent<PlayerSystem> ().GetGamingState ();
+    }
     // Update is called once per frame
     void Update () {
-        if (isInvisible) {
-            invisibletimer -= Time.deltaTime;
-            if (invisibletimer < 0) isInvisible = false;
-        }
+
         ChangeSprite (rigidbody.velocity.x);
     }
-    public override void ChangeHealth (int dheal) {
-        if (dheal < 0) {
-            if (isInvisible) return; //如果不是无敌
-            isInvisible = true;
-            invisibletimer = InvisibleTime;
+    public override void ChangeSprite (float direction) {
+        if (transform.position.x > EveryFunction.GetMouseWorldPosition ().x) {
+            selfObject.localScale = new Vector3 (-1, 1, 1);
+        } else {
+            selfObject.localScale = new Vector3 (1, 1, 1);
         }
-        m_health = Mathf.Clamp (m_health + dheal, 0, MaxHealth);
     }
-
+    public override void TakenDamage (int damage, SkillClass hurtedSkill) {
+        if (isHurted) return; //如果是已经被攻击就返回，不受伤害
+        //收集此攻击的种类
+        isHurted = true;
+        this.hurtedSkill = hurtedSkill;
+        //生成damageText
+        DamageText damageText = Instantiate (GameController.getGameController ().damageText, transform.position, Quaternion.identity, GameController.getGameController ().canvas.transform).GetComponent<DamageText> ();
+        damageText.SetUIDamage (damage);
+        SetHealth (-damage);
+        //将状态转成受伤状态，倒计时无敌时间
+        stateMachine.ChangeState (StateType.Hurt);
+        Invoke ("HurtedOut", HurtedTime);
+    }
 }

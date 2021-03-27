@@ -9,7 +9,7 @@ public class MoveRigidbodyVelocity : MonoBehaviour, IMoveVelocity {
     private Animator animator;
     void Awake () {
         rigidbody = GetComponent<Rigidbody2D> ();
-        animator = GetComponent<Animator> ();
+        animator = GetComponentInChildren<Animator> ();
     }
     public void SetVelocity (Vector3 velocityVector) {
         if (velocityVector != Vector3.zero) animator.SetBool ("isWalking", true);
