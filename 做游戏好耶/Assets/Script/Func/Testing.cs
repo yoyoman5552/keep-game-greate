@@ -22,8 +22,8 @@ public class Testing : MonoBehaviour {
             Vector3 mousePosition = EveryFunction.GetMouseWorldPosition ();
             pathFinding.GetGrid ().GetXY (mousePosition, out int x, out int y);
             pathFinding.GetGrid ().GetXY (playerTransform.position, out int oriX, out int oriY);
-            pathFinding.GetGrid ().GetXY (GameController.getGameController ().leftDownTransform.position, out int minX, out int minY);
-            pathFinding.GetGrid ().GetXY (GameController.getGameController ().rightUpTransform.position, out int maxX, out int maxY);
+            pathFinding.GetGrid ().GetXY (GameController.Instance.leftDownTransform.position, out int minX, out int minY);
+            pathFinding.GetGrid ().GetXY (GameController.Instance.rightUpTransform.position, out int maxX, out int maxY);
             List<PathNode> path = pathFinding.FindPath (oriX, oriY, x, y, minX, minY, maxX, maxY);
             if (path != null) {
                 for (int i = 0; i < path.Count - 1; i++) {

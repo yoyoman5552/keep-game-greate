@@ -29,13 +29,12 @@ public class PlayerBase : IBase {
             selfObject.localScale = new Vector3 (1, 1, 1);
         }
     }
-    public override void TakenDamage (int damage, SkillClass hurtedSkill) {
+    public override void TakenDamage (int damage) {
         if (isHurted) return; //如果是已经被攻击就返回，不受伤害
         //收集此攻击的种类
         isHurted = true;
-        this.hurtedSkill = hurtedSkill;
         //生成damageText
-        DamageText damageText = Instantiate (GameController.getGameController ().damageText, transform.position, Quaternion.identity, GameController.getGameController ().canvas.transform).GetComponent<DamageText> ();
+        DamageText damageText = Instantiate (GameController.Instance.damageText, transform.position, Quaternion.identity, GameController.Instance.canvas.transform).GetComponent<DamageText> ();
         damageText.SetUIDamage (damage);
         SetHealth (-damage);
         //将状态转成受伤状态，倒计时无敌时间

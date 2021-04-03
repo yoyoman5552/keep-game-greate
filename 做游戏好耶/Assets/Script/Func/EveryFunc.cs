@@ -1,8 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EveryFunc {
+    //cd类型
+    public enum CDType {
+        Cd,
+        Gcd
+    }
+    //伤害类型
+    public enum DamageType {
+        Normal,
+        ArmorBreaking
+    }
+    //攻击类型
+    public enum AttackType {
+        Single, //单体
+        Multiple //多体
+    }
+    //选择方式类型
+    public enum SelectorType {
+        Sector, //扇形
+        Rectangle //矩形
+    }
     public enum StateType {
         Idle,
         Patrol,
@@ -17,8 +38,18 @@ namespace EveryFunc {
         Gaming,
         UI
     }
-    //因为技能种类繁杂，不用damageType，使用模板化，对状态机来说他们不需要知道受到的是哪种类型的伤害
-    //这里本来有个DamageType,被删掉了，原因如上
+    //角色状态
+    public enum CharacterType {
+        Normal,
+        Invincible
+    }
+    /*     public enum BuffType {
+            ContinueDamage,
+            ArmorBreaking,
+            SpeedSlowDown,
+            MaxHealthChange
+        }
+     */
     public static class ConstantList { //常量列表
         //短短的无敌时间，为了防止被同一次攻击伤害两次
         public const float WUDITIME = 0.2f;
@@ -32,13 +63,15 @@ namespace EveryFunc {
             get {
                 if (pathFinding == null) {
                     //如果PathFinding是空的，则优先调用GameController的初始化（会初始化pahtFinding)
-                    GameObject.FindWithTag ("GameController").GetComponent<GameController> ().Init ();
+                    GameController.Instance.Init ();
                 }
                 return pathFinding;
             }
         }
         public static Vector3 GetMouseWorldPosition () { //获得鼠标位置
-            return GetMouseWorldPositionWithZ (Input.mousePosition);
+            Vector3 pos = GetMouseWorldPositionWithZ (Input.mousePosition);
+            pos.z = 0;
+            return pos;
         }
         public static Vector3 GetMouseWorldPositionWithZ (Vector3 screenPosition) { //从屏幕位置上获得世界位置
             return Camera.main.ScreenToWorldPoint (screenPosition);
@@ -100,5 +133,54 @@ namespace EveryFunc {
             //获得从originalPosition到targetPosition的单位向量
             return (targetPosition - originalPosition).normalized;
         }
+
+        //勾股定理求斜边
+        public static float GetTriangleLongSide (float r, float l) {
+            return (Mathf.Sqrt (r * r + l * l));
+        }
+
+        //ArrayHelper
+        //Array内查找特定值
+        public static T Find<T> (this T[] array, Func<T, bool> condition) {
+            for (int i = 0; i < array.Length; i++) {
+                if (condition (array[i])) {
+                    return array[i];
+                }
+            }
+            return default (T);
+        }
+        //Array内返回所有满足条件的对象 是对象不是值
+        public static T[] FindAll<T> (this T[] array, Func<T, bool> condition) {
+            //存储筛选出来满足条件的元素
+            T[] result = new T[array.Length];
+            for (int i = 0; i < array.Length; i++) {
+                //筛选条件，满足条件就存入result中
+                if (condition (array[i]))
+                    result[i] = array[i];
+            }
+            return result;
+        }
+        //Array内筛选满足条件的值 是值不是对象
+        public static Q[] Select<T, Q> (this T[] array, Func<T, Q> condition) {
+            //存储筛选出来满足条件的元素
+            Q[] result = new Q[array.Length];
+            for (int i = 0; i < array.Length; i++) {
+                //筛选条件，满足条件就存入result中
+                result[i] = condition (array[i]);
+            }
+            return result;
+        }
+
+        //Array内查找最小的值
+        public static T GetMin<T, Q> (this T[] array, Func<T, Q> condition) where Q : IComparable {
+            T min = array[0];
+            for (int i = 0; i < array.Length; i++) {
+                if (condition (min).CompareTo (condition (array[i])) > 0) {
+                    min = array[i];
+                }
+            }
+            return min;
+        }
+
     }
 }

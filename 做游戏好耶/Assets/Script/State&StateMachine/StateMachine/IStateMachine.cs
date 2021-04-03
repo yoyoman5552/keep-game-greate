@@ -4,5 +4,4 @@ using EveryFunc;
 using UnityEngine;
 public interface IStateMachine {
     void ChangeState (StateType nextStateType);
-    IState GetCurrentState();
 }

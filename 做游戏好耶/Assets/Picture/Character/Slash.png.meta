@@ -668,6 +668,12 @@ TextureImporter:
   - first:
       213: -2112593104904926108
     second: Slash_221
+  - first:
+      213: 5748633474938524659
+    second: Slash_222
+  - first:
+      213: 3614451802363383877
+    second: Slash_223
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -5410,6 +5416,27 @@ TextureImporter:
       bones: []
       spriteID: 46cc33b93cf8ea2e0800000000000000
       internalID: -2112593104904926108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slash_222
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 240
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f351a910bf37cf40800000000000000
+      internalID: 5748633474938524659
       vertices: []
       indices: 
       edges: []

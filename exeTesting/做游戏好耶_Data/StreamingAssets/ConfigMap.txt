@@ -1,0 +1,2 @@
+BodyAttack=Skill/BodyAttack
+Slush=Skill/Slush

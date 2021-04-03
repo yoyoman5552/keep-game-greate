@@ -5,12 +5,10 @@ using UnityEngine;
 public class AttackState : IState {
     private IStateMachine stateMachine;
     private CharacterBase characterBase;
-    private ISkill skill;
     public AttackState (IStateMachine stateMachine, CharacterBase characterBase) {
         this.stateMachine = stateMachine;
         this.characterBase = characterBase;
-        skill = characterBase.GetComponentInChildren<ISkill> ();
-        skill.Init (stateMachine, characterBase);
+
     }
     public void Start () {
 

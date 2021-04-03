@@ -8,7 +8,7 @@ public class MovePositionPathFinding : MonoBehaviour, IMovePosition {
     private List<PathNode> pathList;
     public void SetPosition (Vector3 movePosition) {
         pathIndex = -1;
-        pathList = EveryFunction.getPath (transform.position, movePosition, GameController.getGameController ().leftDownTransform.position, GameController.getGameController ().rightUpTransform.position);
+        pathList = EveryFunction.getPath (transform.position, movePosition, GameController.Instance.leftDownTransform.position, GameController.Instance.rightUpTransform.position);
         if (pathList != null) {
             pathIndex = 1;
         }

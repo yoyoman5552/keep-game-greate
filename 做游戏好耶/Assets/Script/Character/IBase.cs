@@ -20,12 +20,11 @@ public abstract class IBase : MonoBehaviour {
     protected IStateMachine stateMachine; //获取自身的状态机
     //身体接触到的敌人
     protected Collider2D other;
-
+    
     //被攻击后的小小无敌时间、是否被攻击、被什么技能伤害
     //无敌时间主要是防止被同一次攻击计算多次伤害，所以无敌时间很短：0.005(WUDITIME)
     protected float HurtedTime;
     public bool isHurted;
-    protected SkillClass hurtedSkill; //被什么技能伤害
     public void IBaseInit () {
         HurtedTime = ConstantList.WUDITIME;
         m_health = MaxHealth;
@@ -43,13 +42,12 @@ public abstract class IBase : MonoBehaviour {
         //增加生命值
         SetHealth (dheal);
     }
-    public virtual void TakenDamage (int damage, SkillClass hurtedSkill) {
+    public virtual void TakenDamage (int damage) {
         if (isHurted) return; //如果是已经被攻击就返回，不受伤害
         //收集此攻击的种类
         isHurted = true;
-        this.hurtedSkill = hurtedSkill;
         //生成damageText
-        DamageText damageText = Instantiate (GameController.getGameController ().damageText, transform.position, Quaternion.identity, GameController.getGameController ().canvas.transform).GetComponent<DamageText> ();
+        DamageText damageText = Instantiate (GameController.Instance.damageText, transform.position, Quaternion.identity, GameController.Instance.canvas.transform).GetComponent<DamageText> ();
         damageText.SetUIDamage (damage);
         SetHealth (-damage);
         //将状态转成受伤状态，倒计时无敌时间
@@ -72,9 +70,7 @@ public abstract class IBase : MonoBehaviour {
     public void SetHealth (int dBuff) {
         this.m_health = Mathf.Clamp (health + dBuff, 0, MaxHealth);
     }
-    public SkillClass GetHurtedSkill () {
-        return hurtedSkill;
-    }
+
     public Rigidbody2D GetRigidbody () {
         return rigidbody;
     }

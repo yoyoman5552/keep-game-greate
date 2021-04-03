@@ -1,0 +1,3 @@
+BodyAttack=Skill/BodyAttack
+GroundFire=Skill/GroundFire
+Slush=Skill/Slush
