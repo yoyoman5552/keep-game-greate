@@ -35,21 +35,6 @@ namespace EveryFunc.Skill {
             }
             return null;
         }
-        /*         //生成技能  
-                public void GenerateSkill (SkillData data) {
-                    //创建技能预制件——通过对象池生成
-                    GameObject skillObj = GameObjectPool.Instance.CreateObject (data.prefabName, data.skillPrefab, transform.position, transform.rotation);
-                    SkillDeployer skillDeployer = skillObj.GetComponent<SkillDeployer> ();
-
-                    //传递技能数据
-                    skillDeployer.skillData = data; //内部创建算法对象
-                    skillDeployer.DeploySkill (); //内部执行算法对象
-                    //销毁技能
-                    GameObjectPool.Instance.CollectObject (skillObj, data.durationTime);
-                    //        DestroyObject(skillObj,data.durationTime);
-                    //开启技能冷却
-                    StartCoroutine (CoolTimeDown (data));
-                } */
         //生成技能需要知道的事情：技能数据，释放的目标位置
         public void GenerateSkill (SkillData data, Vector3 deployPosition) {
             //计算技能释放角度，默认为普通朝向（正向）
@@ -60,7 +45,7 @@ namespace EveryFunc.Skill {
             }
             //创建技能预制件——通过对象池生成
             GameObject skillObj = GameObjectPool.Instance.CreateObject (data.prefabName, data.skillPrefab, deployPosition, quaternion);
-            SkillDeployer skillDeployer = skillObj.GetComponent<SkillDeployer> ();
+            SkillDeployer skillDeployer = skillObj.GetComponentInChildren<SkillDeployer> ();
 
             //传递技能数据
             //内部创建算法对象
@@ -69,10 +54,8 @@ namespace EveryFunc.Skill {
             skillObj.GetComponentInChildren<Animator> ().Play (skillDeployer.skillData.prefabName);
             //先播放动画再执行算法对象
             //内部执行算法对象
-            skillDeployer.DeploySkill ();
             //销毁技能
             GameObjectPool.Instance.CollectObject (skillObj, data.durationTime);
-            //        DestroyObject(skillObj,data.durationTime);
             //开启技能冷却
             StartCoroutine (CoolTimeDown (data));
         }

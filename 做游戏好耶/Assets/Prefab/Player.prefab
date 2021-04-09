@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &61581633
+--- !u!1 &61586759
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,27 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 61581634}
+  - component: {fileID: 61586760}
   m_Layer: 11
-  m_Name: LeftMouseSkill
+  m_Name: BookPlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &61581634
+--- !u!4 &61586760
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 61581633}
+  m_GameObject: {fileID: 61586759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.8, y: 0.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1863488755254204062}
-  m_RootOrder: 1
+  m_Father: {fileID: 1705992323}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1705992322
 GameObject:
@@ -58,7 +58,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 61586760}
   m_Father: {fileID: 1863488755254204062}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -72,7 +73,7 @@ Animator:
   m_GameObject: {fileID: 1705992322}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 322a1aec416f2c84e9f6e6e8ef78ac78, type: 2}
+  m_Controller: {fileID: 22100000, guid: a8d8253afc0601e47b877b467242324c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,7 +121,7 @@ SpriteRenderer:
   m_SortingLayerID: 319214597
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0e51d13ecba0be04ab508eead63ffe61, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f70a707243f4d0e4ba0ee473bd50e4a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,9 +144,9 @@ GameObject:
   - component: {fileID: 1863488755254204061}
   - component: {fileID: 8094246533562377352}
   - component: {fileID: 1863488754389848617}
-  - component: {fileID: 396219488}
   - component: {fileID: 4798005921893471512}
-  - component: {fileID: 343009559}
+  - component: {fileID: 1887552234}
+  - component: {fileID: 1887552227}
   - component: {fileID: 955121327}
   - component: {fileID: 955121328}
   m_Layer: 11
@@ -167,7 +168,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1705992323}
-  - {fileID: 61581634}
   - {fileID: 1863488754890587147}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -231,25 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61e82d7423f11343aa09ae814817b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
---- !u!114 &396219488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863488755254204049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec8268c86a093f34e8d26c12b9dd0d82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfDamage: 5
-  minRandomDamage: 0
-  maxRandomDamage: 5
-  MaxHealth: 100
-  m_health: 0
-  isHurted: 0
 --- !u!114 &4798005921893471512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db5fdb43edffed44ae2e97ecce201e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &343009559
+--- !u!114 &1887552234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,9 +252,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 1863488755254204049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac7e65314366f9e41abbd16baab0d955, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ec2df8d84902024db685190dfa17a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultStateID: 8
+  idleTimer: 0
+  hurtedTimer: 0
+  serachDistance: 0
+  attackDistance: 0
+  movePercent: 0
+  runPercent: 0
+  patrolRadius: 0
+  targetTags:
+  - Player
+  attackInterval: 0
+  animator: {fileID: 0}
+  characterStatus: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
+  patrolPosition: {x: 0, y: 0, z: 0}
+  targetTF: {fileID: 0}
+  skillSystem: {fileID: 0}
+--- !u!114 &1887552227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863488755254204049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb92f531411ffc64ba9e674a5ad55df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    CharacterID: 0
+    MaxHealth: 100
+    MaxShield: 0
+    damage: 5
+    deepDamageRatio: 0
+    healingPower: 10
+    cdEffectPower: 0
+    Speed: 5
+    minRandomDamage: 0
+    maxRandomDamage: 5
+    selfTexture: {fileID: 0}
+    material: {fileID: 0}
+    textureTime: 0
+    animator: {fileID: 0}
+    HurtedTime: 0
+    isHurted: 0
+    status: {fileID: 0}
+    rigidbody: {fileID: 0}
 --- !u!114 &955121327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +320,7 @@ MonoBehaviour:
     name: Slush
     description: 
     cd: 0
-    cdTime: 4
+    cdTime: 0.5
     cdTimer: 0
     attackDistance: 2
     attackAngle: 360
@@ -302,21 +331,21 @@ MonoBehaviour:
     - Damage
     - Strike
     nextSkillId: 0
-    damageType: 0
     atkRatio: 0.5
     tpsRatio: 0
     readTime: 0
-    durationTime: 0.4
+    durationTime: 1
     atkInterval: 1
     owner: {fileID: 0}
-    prefabName: Slush
+    prefabName: GroundFire
     skillPrefab: {fileID: 0}
-    animationName: 
+    characterAnimationName: CharacterAttack
     hitFxName: 
     hitFxPrefab: {fileID: 0}
     level: 0
-    attackType: 0
-    selectorType: 1
+    attackType: 1
+    selectorType: 0
+    isFollowCharacter: 0
 --- !u!114 &955121328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 1517880759465608553, guid: fd40ab18daef86d4b872056ad9c8306e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1517880759465608553, guid: fd40ab18daef86d4b872056ad9c8306e,
         type: 3}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using EveryFunc.Character;
 using UnityEngine;
 namespace EveryFunc.Skill {
     //矩形
@@ -28,7 +29,7 @@ namespace EveryFunc.Skill {
                 (Vector3.Angle (skillTF.right, t.position - skillTF.position) <= 90)));
 
             //筛选出活的角色
-            targets.FindAll (t => t.GetComponent<IBase> ().health > 0);
+            targets.FindAll (t => t.GetComponent<CharacterStatus> ().data.health > 0);
             Transform[] results = targets.ToArray ();
             //返回目标（群攻/单攻)
             if (skillData.attackType == AttackType.Multiple || results.Length == 0)

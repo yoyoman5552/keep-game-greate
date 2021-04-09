@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/* using System.Collections;
 using System.Collections.Generic;
 using EveryFunc;
 using UnityEngine;
@@ -33,9 +33,8 @@ public class MoveRoamRandom : MonoBehaviour {
         if (!isWalking) SetMovePosition ();
     }
     private void SetMovePosition () {
-        //如果有路径就进行移动
+        //如果有路径就进行移动 
         if (EveryFunction.getPath (transform.position, targetMovePosition, leftDownTransform.position, rightUpTransform.position) != null) {
-            GetComponent<IMovePosition> ().SetPosition (targetMovePosition, leftDownTransform.position, rightUpTransform.position);
             isWalking = true;
         } else {
             //没有路径就直接归为当前位置，让程序再随机一次（等于跳过这次移动）
@@ -46,4 +45,4 @@ public class MoveRoamRandom : MonoBehaviour {
         this.leftDownTransform.position = leftDownPosition;
         this.rightUpTransform.position = rightUpPosition;
     }
-}
+} */

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using EveryFunc;
+using EveryFunc.Character;
 using UnityEngine;
 namespace EveryFunc.Skill {
     //封装技能系统，提供简单的技能释放功能
@@ -13,6 +14,8 @@ namespace EveryFunc.Skill {
         private Animator anim;
         private SkillData skill;
         private Transform selectedTarget; //选中的目标
+        //技能位置
+        private Vector3 deployPosition;
         private void Start () {
             //获取角色的技能管理器和动画状态机
             skillManager = GetComponent<CharacterSkillManager> ();
@@ -20,21 +23,24 @@ namespace EveryFunc.Skill {
             //GetComponentInChildren<AnimationEvent> ().attackHandler += DeploySkill;
         }
         //生成技能
-        private void DeploySkill (Vector3 deployPosition) {
+        public void DeploySkill () {
             skillManager.GenerateSkill (skill, deployPosition);
         }
         //使用技能攻击,玩家直接用这个
         public void AttackUseSkill (int skillId) {
+            //检测是否是受击状态，如果是受击状态则不产生技能
+            if (GetComponent<CharacterStatus> ().data.textureTime > 0) return;
             //准备技能
             skill = skillManager.PrepareSkill (skillId);
             //如果技能无法使用（在cd或者不存在）
             if (skill == null) return;
             //播放动画:人物动画 非技能动画 技能动画生成自己播放
+            anim.Play (skill.characterAnimationName);
             //            anim.SetBool (skill.animationName, true);
 
             //如果技能释放者是玩家，就不需要瞄准敌人：由鼠标瞄准
             if (this.tag == "Player") {
-                DeploySkill (EveryFunction.GetMouseWorldPosition ());
+                deployPosition = EveryFunction.GetMouseWorldPosition ();
                 return;
             }
             //以下为npc的判断方式
@@ -46,7 +52,7 @@ namespace EveryFunc.Skill {
             //--朝向目标,生成技能的时候把朝向传输进去
             Transform targetTF = SelectTarget ();
             if (targetTF != null) {
-                DeploySkill (targetTF.position);
+                deployPosition = targetTF.position;
             }
             //--选中目标:先取消上一次目标，再选中本次的目标
             //核心思想：存储上次选中的物体

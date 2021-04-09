@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 328795558189593201}
   - component: {fileID: 6796883425441442860}
   - component: {fileID: 6736158944911015809}
+  - component: {fileID: 5894525050535064918}
   m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
@@ -102,6 +103,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5894525050535064918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3066394046224552734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2659ba2f83e7489f493265c43d96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3289283527254984246
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3289283527254984247}
-  - component: {fileID: 2852427939461247045}
+  - component: {fileID: 4748254268190791481}
   m_Layer: 0
   m_Name: Slush
   m_TagString: Untagged
@@ -134,7 +147,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2852427939461247045
+--- !u!114 &4748254268190791481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +156,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3289283527254984246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4fafa3fcd426dd409a1d37f18db05ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 57fbb532b525fec4093ee9ca321cbf7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

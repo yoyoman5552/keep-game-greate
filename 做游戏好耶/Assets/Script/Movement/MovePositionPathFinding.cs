@@ -3,36 +3,33 @@ using System.Collections.Generic;
 using EveryFunc;
 using UnityEngine;
 public class MovePositionPathFinding : MonoBehaviour, IMovePosition {
-    private float reachedMinPathPositionDistance = 0.3f; //到达路径点的最短距离
     private int pathIndex = -1;
     private List<PathNode> pathList;
     public void SetPosition (Vector3 movePosition) {
+        //索引值初始化
         pathIndex = -1;
-        pathList = EveryFunction.getPath (transform.position, movePosition, GameController.Instance.leftDownTransform.position, GameController.Instance.rightUpTransform.position);
-        if (pathList != null) {
+        //限制区域：地图左下和右上，因为是地牢，所以不会占很多格子
+        pathList = EveryFunction.GetPath (transform.position, movePosition);
+        //路径点1：一定是自己位置上的格子，所以要算如果路径点>1，说明还没到目标位置
+        if (pathList != null && pathList.Count > 1) {
             pathIndex = 1;
         }
     }
-    public void SetPosition (Vector3 movePosition, Vector3 leftDownPosition, Vector3 rightUpPosition) {
-        pathIndex = -1;
-        pathList = EveryFunction.getPath (transform.position, movePosition, leftDownPosition, rightUpPosition);
-        if (pathList != null) {
-            pathIndex = 1;
-        }
+    public void SetPathList (List<PathNode> pathList) {
+        //直接导入pathList
+        this.pathList = pathList;
+        pathIndex = 1;
     }
-    private void Update () {
+    //路径移动
+    public void PathMoving () {
         if (pathIndex != -1) {
-            //pathList为1说明是到达自己点的位置上
-            if (pathList.Count == 1) {
-                pathIndex = -1;
-                return;
-            }
             //移动到下一个点位
             Vector3 nextPathPosition = pathList[pathIndex].GetWorldCenterPosition ();
             Vector3 moveVelocity = (nextPathPosition - transform.position).normalized;
+            //调用移动方法
             GetComponent<IMoveVelocity> ().SetVelocity (moveVelocity);
             //判断是否到下一个点的位置上
-            if (Vector3.Distance (nextPathPosition, transform.position) < reachedMinPathPositionDistance) {
+            if (Vector3.Distance (nextPathPosition, transform.position) < ConstantList.PATHDISTANCE) {
                 pathIndex++;
                 if (pathIndex >= pathList.Count) {
                     //结束路径
@@ -41,12 +38,11 @@ public class MovePositionPathFinding : MonoBehaviour, IMovePosition {
             }
         } else {
             //停止
-            pathList = null;
-            GetComponent<IMoveVelocity> ().SetVelocity (Vector3.zero);
+            StopPosition ();
         }
     }
     public void StopPosition () {
-        pathList=null;
+        pathList = null;
         GetComponent<IMoveVelocity> ().SetVelocity (Vector3.zero);
     }
 

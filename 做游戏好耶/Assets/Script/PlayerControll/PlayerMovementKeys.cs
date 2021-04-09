@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PlayerMovementKeys : MonoBehaviour {
 
-    private void OnEnable () {
-       
-    }
     private void Update () {
         float moveX = 0f;
         float moveY = 0f;

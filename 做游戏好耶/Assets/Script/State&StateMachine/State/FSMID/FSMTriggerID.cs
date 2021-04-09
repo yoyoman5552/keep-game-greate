@@ -5,17 +5,23 @@ namespace EveryFunc.FSM {
     public enum FSMTriggerID {
         //没有生命
         NoHealth,
+        //被攻击了
+        IsHurted,
         //发现目标
-        SawTarget,
+        DetectTarget,
         //到达目标
         ReachedTarget,
         //目标被击杀
-        KilledTarget,
         //超出攻击范围
         OutOfAttackRange,
         //丢失目标
         LostTarget,
         //完成巡逻
-        CompletePatrol
+        CompletePatrol,
+        //闲置完成
+        CompleteIdle,
+
+        //人物条件
+        UION
     }
 }

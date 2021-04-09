@@ -242,12 +242,12 @@ GameObject:
   - component: {fileID: 5244086512822568822}
   - component: {fileID: 5244086512822568816}
   - component: {fileID: 5244086512822568817}
-  - component: {fileID: 5244086512158460517}
   - component: {fileID: 288325900}
   - component: {fileID: 5244086512822568819}
-  - component: {fileID: 5244086512822568818}
-  - component: {fileID: 719297895}
   - component: {fileID: 719297896}
+  - component: {fileID: 1504492594}
+  - component: {fileID: 4510277760692649468}
+  - component: {fileID: 5383218364228348268}
   m_Layer: 12
   m_Name: Mario
   m_TagString: Enemy
@@ -298,18 +298,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
---- !u!114 &5244086512158460517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5244086512822568812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90459b09cf2488a4f91494282f24c53a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &288325900
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -320,7 +308,7 @@ CircleCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -347,45 +335,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5244086512822568818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5244086512822568812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e56d32d223ee034d88314ffbaf8e880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfDamage: 2
-  minRandomDamage: 0
-  maxRandomDamage: 5
-  MaxHealth: 10
-  m_health: 0
-  isHurted: 0
-  patrolSpeed: 2
-  chaseSpeed: 3
-  idleTime: 1
-  patrolGrid: {fileID: 0}
-  target: {fileID: 0}
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &719297895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5244086512822568812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a125cc8e7276840803392068223827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skills: []
 --- !u!114 &719297896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +349,90 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedName: Selected
   displayTime: 3
+--- !u!114 &1504492594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244086512822568812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb92f531411ffc64ba9e674a5ad55df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    CharacterID: 0
+    MaxHealth: 100
+    MaxShield: 0
+    damage: 5
+    minRandomDamage: 0
+    maxRandomDamage: 5
+    healingPower: 10
+    cdEffectPower: 0
+    Speed: 1
+    selfTexture: {fileID: 0}
+    animator: {fileID: 0}
+    HurtedTime: 0
+    isHurted: 0
+    status: {fileID: 0}
+    rigidbody: {fileID: 0}
+    target: {fileID: 0}
+--- !u!114 &4510277760692649468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244086512822568812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a125cc8e7276840803392068223827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - skillId: 1001
+    name: Slush
+    description: 
+    cd: 0
+    cdTime: 0.5
+    cdTimer: 0
+    attackDistance: 2
+    attackAngle: 360
+    attackTargetTags:
+    - Player
+    attackTargets: []
+    impactType:
+    - Damage
+    nextSkillId: 0
+    damageType: 0
+    atkRatio: 0.5
+    tpsRatio: 0
+    readTime: 0
+    durationTime: 1
+    atkInterval: 1
+    owner: {fileID: 0}
+    prefabName: Slush
+    skillPrefab: {fileID: 0}
+    animationName: 
+    hitFxName: 
+    hitFxPrefab: {fileID: 0}
+    level: 0
+    attackType: 0
+    selectorType: 0
+    isFollowCharacter: 0
+--- !u!114 &5383218364228348268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5244086512822568812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b4378495ae0c147ad60d90024a5d81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5244086513138139096
 PrefabInstance:
   m_ObjectHideFlags: 0

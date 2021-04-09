@@ -8,6 +8,8 @@ using UnityEngine;
 public class CloseRangeSkillDeployer : SkillDeployer {
     //近身攻击释放器
     public override void DeploySkill () {
+        //近身攻击：位置和释放者位置重合
+        transform.position = skillData.owner.transform.position;
         //设置父对象：使技能跟随父对象移动，并且技能目标位置设置在父对象身上
         if (skillData.isFollowCharacter) transform.SetParent (skillData.owner.transform);
         //执行选区算法

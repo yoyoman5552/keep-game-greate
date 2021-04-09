@@ -7,10 +7,11 @@ public class MovePositionDirect : MonoBehaviour, IMovePosition {
     public void SetPosition (Vector3 movePosition) {
         this.movePosition = movePosition;
     }
+    public void SetPathList (List<PathNode> pathList) {
 
-    public void SetPosition (Vector3 movePosition, Vector3 leftDownPosition, Vector3 rightUpPosition) { }
+    }
 
-    private void Update () {
+    public void PathMoving () {
         Vector3 moveDir = (movePosition - transform.position).normalized;
         GetComponent<IMoveVelocity> ().SetVelocity (moveDir);
     }

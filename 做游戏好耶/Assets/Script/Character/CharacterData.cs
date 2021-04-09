@@ -8,6 +8,8 @@ namespace EveryFunc.Character {
     [RequireComponent (typeof (Rigidbody2D))]
     [Serializable]
     public class CharacterData {
+        //角色ID 
+        public int CharacterID;
         //最大生命值
         public int MaxHealth;
         //用于设置当前生命值
@@ -22,24 +24,35 @@ namespace EveryFunc.Character {
         private int currentShield;
         //攻击力
         public int damage;
-        //最小随机攻击buff
-        public int minRandomDamage = 0; //伤害最小随机值
-        //最大随机攻击buff
-        public int maxRandomDamage = 5; //伤害最大随机值
+        //暴击几率
+        public float deepDamageRatio;
+
         //治愈力
         public int healingPower;
         //CD影响力
         public float cdEffectPower;
         //移动速度
         public float Speed;
-        [HideInInspector] public float moveSpeed { get { return m_speed; } set { m_speed = Mathf.Max (0,value); } }
+        [HideInInspector] public float moveSpeed {
+            get { return m_speed; } set {
+                m_speed = Mathf.Max (0, value);
+                //脚本速度设置
+                moveVelocity.SetMoveSpeed (m_speed);
+            }
+        }
         private float m_speed;
+        //最大最小随机攻击buff是为了让伤害不是一成不变，随机值定为0~5
+        //最小随机攻击buff
+        [HideInInspector] public int minRandomDamage = 0; //伤害最小随机值
+        //最大随机攻击buff
+        [HideInInspector] public int maxRandomDamage = 5; //伤害最大随机值
         //自身Object获取，为了自身贴图转向，动画状态机也是在selfTexture上面
         [HideInInspector] public Transform selfTexture;
+        [HideInInspector] public Material material;
+        //受伤变红的计时器
+        [HideInInspector] public float textureTime;
         //自身的动画状态机Animator
         [HideInInspector] public Animator animator;
-        //自身的状态机
-        protected IStateMachine stateMachine; //获取自身的状态机
 
         //被攻击后的小小无敌时间、是否被攻击、被什么技能伤害
         //无敌时间主要是防止被同一次攻击计算多次伤害，所以无敌时间很短：0.005(WUDITIME)
@@ -48,7 +61,7 @@ namespace EveryFunc.Character {
         //是否被攻击了
         [HideInInspector] public bool isHurted;
         //Buff管理器
-//        [HideInInspector] public BuffActiveManager buffManager;
+        //        [HideInInspector] public BuffActiveManager buffManager;
         //CHaracterStatus对象：获取实例对象
         [HideInInspector] public CharacterStatus status;
         //rigidbody组件
@@ -57,10 +70,18 @@ namespace EveryFunc.Character {
             //自身属性初始化
             this.status = status;
             rigidbody = status.GetComponent<Rigidbody2D> ();
+            moveVelocity = status.GetComponent<IMoveVelocity> ();
             moveSpeed = Speed;
             health = MaxHealth;
+            selfTexture = status.transform.Find ("SelfObject");
+            material = selfTexture.GetComponent<SpriteRenderer> ().material;
+            textureTime = ConstantList.HURTCOLORTIME;
+            HurtedTime = ConstantList.WUDITIME;
         }
-        //攻击目标的位置
-        [HideInInspector] public Transform target;
+        /*         //攻击目标的位置
+                [HideInInspector] public Transform target;
+         */
+        //移动脚本
+        private IMoveVelocity moveVelocity;
     }
 }

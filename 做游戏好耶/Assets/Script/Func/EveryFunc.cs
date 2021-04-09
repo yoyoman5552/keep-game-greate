@@ -52,14 +52,16 @@ namespace EveryFunc {
      */
     public static class ConstantList { //常量列表
         //短短的无敌时间，为了防止被同一次攻击伤害两次
-        public const float WUDITIME = 0.2f;
+        public const float WUDITIME = 0.05f;
         //被攻击时的颜色变化
         public const float HURTCOLORTIME = 0.3f;
+        //path：判断是否走到路径点的距离
+        public const float PATHDISTANCE = 0.3f;
     }
     public static class EveryFunction {
         private static int sortingOrder = 1;
         private static PathFinding pathFinding;
-        public static PathFinding PathFind {
+        public static PathFinding pathFind {
             get {
                 if (pathFinding == null) {
                     //如果PathFinding是空的，则优先调用GameController的初始化（会初始化pahtFinding)
@@ -102,20 +104,28 @@ namespace EveryFunc {
             tarPos.z = Mathf.RoundToInt (oriPos.z);
             return tarPos;
         }
-        public static void SetPathFinding (PathGrid pathGrid) {
+        public static void InitPathFinding (PathGrid pathGrid) {
+            //初始化路径查找
             pathFinding = new PathFinding (pathGrid.GetGrid ());
         }
-        public static List<PathNode> getPath (Vector3 originalPosition, Vector3 targetPosition, Vector3 leftDownPosition, Vector3 rightUpPosition) {
-            pathFinding.GetGrid ().GetXY (originalPosition, out int oriX, out int oriY);
-            pathFinding.GetGrid ().GetXY (targetPosition, out int tarX, out int tarY);
-            pathFinding.GetGrid ().GetXY (leftDownPosition, out int minX, out int minY);
-            pathFinding.GetGrid ().GetXY (rightUpPosition, out int maxX, out int maxY);
-            return pathFinding.FindPath (oriX, oriY, tarX, tarY, minX, minY, maxX, maxY);
+        //自己设置限制范围 获取路径
+        public static List<PathNode> GetPathWithLimit (Vector3 originalPosition, Vector3 targetPosition, Vector3 leftDownPosition, Vector3 rightUpPosition) {
+            pathFind.GetGrid ().GetXY (originalPosition, out int oriX, out int oriY);
+            pathFind.GetGrid ().GetXY (targetPosition, out int tarX, out int tarY);
+            pathFind.GetGrid ().GetXY (leftDownPosition, out int minX, out int minY);
+            pathFind.GetGrid ().GetXY (rightUpPosition, out int maxX, out int maxY);
+            return pathFind.FindPath (oriX, oriY, tarX, tarY, minX, minY, maxX, maxY);
+        }
+        //默认最大的限制范围 获取路径
+        public static List<PathNode> GetPath (Vector3 originalPosition, Vector3 targetPosition) {
+            pathFind.GetGrid ().GetXY (originalPosition, out int oriX, out int oriY);
+            pathFind.GetGrid ().GetXY (targetPosition, out int tarX, out int tarY);
+            return pathFind.FindPath (oriX, oriY, tarX, tarY, 0, 0, pathFind.GetGrid ().GetWidth (), pathFind.GetGrid ().GetHeight ());
         }
         public static List<PathNode> GetPathNodes (Vector3 originalPosition, Vector3 targetPosition) {
-            pathFinding.GetGrid ().GetXY (originalPosition, out int oriX, out int oriY);
-            pathFinding.GetGrid ().GetXY (targetPosition, out int tarX, out int tarY);
-            return pathFinding.FindPath (oriX, oriY, tarX, tarY, 0, 0, pathFinding.GetGrid ().GetWidth (), pathFinding.GetGrid ().GetHeight ());
+            pathFind.GetGrid ().GetXY (originalPosition, out int oriX, out int oriY);
+            pathFind.GetGrid ().GetXY (targetPosition, out int tarX, out int tarY);
+            return pathFind.FindPath (oriX, oriY, tarX, tarY, 0, 0, pathFind.GetGrid ().GetWidth (), pathFind.GetGrid ().GetHeight ());
         }
         public static Vector3 GetRandomDir () { //随机方向的单位向量（Vector3）
             return new Vector3 (UnityEngine.Random.Range (-1f, 1f), UnityEngine.Random.Range (-1f, 1f)).normalized;

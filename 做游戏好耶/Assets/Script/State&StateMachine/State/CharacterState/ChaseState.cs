@@ -1,57 +1,39 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using EveryFunc;
 using UnityEngine;
-public class ChaseState : IState {
-    //PatrolState的代码基本和MoveRoamRandom相同，MoveRoamRandom的作用是人物装上之后就只会移动
-    //MoveRoamRandom如果给不需要对话的人装上，变成只会移动的npc
-    private IStateMachine stateMachine;
-    private CharacterBase characterBase;
-    private Vector3 leftDownPosition;
-    private Vector3 rightUpPosition;
-    private float chaseSpeed; //追击速度
-    private float randomDistanceX;
-    private float randomDistanceY;
-    private float arrivedAtPositionMinDistance = 1f; //到达目标点的最短距离
-    private Transform target;
-    public ChaseState (IStateMachine stateMachine, CharacterBase characterBase) {
-        this.stateMachine = stateMachine;
-        this.characterBase = characterBase;
-    }
-    public void Start () {
-        //初始化
-        leftDownPosition = characterBase.GetPatrolPoints (0);
-        rightUpPosition = characterBase.GetPatrolPoints (1);
-        SetLimitArea (leftDownPosition, rightUpPosition);
-        chaseSpeed = characterBase.chaseSpeed;
-        this.characterBase.GetComponent<IMoveVelocity> ().SetMoveSpeed (chaseSpeed);
-        target = characterBase.target;
-    }
-    public void Update () {
-        SetMovePosition ();
-        if (Vector3.Distance (characterBase.transform.position, target.position) < arrivedAtPositionMinDistance) {
-            Debug.Log ("catch u!");
-            stateMachine.ChangeState (StateType.Idle);
+namespace EveryFunc.FSM {
+    //追击状态
+    public class ChaseState : FSMState {
+        //        private float oriDistance;
+        //一定要初始化stateID,而且要初始化对
+        public override void Init () {
+            stateID = FSMStateID.Chase;
         }
-    }
-    public void Exit () {
-        this.characterBase.GetComponent<IMoveVelocity> ().SetMoveSpeed (0f);
-        characterBase.GetComponent<IMovePosition> ().SetPosition (characterBase.transform.position, leftDownPosition, rightUpPosition);
-    }
-    private void SetMovePosition () {
-        //如果有路径就进行移动
-        if (EveryFunction.getPath (characterBase.transform.position, target.position, leftDownPosition, rightUpPosition) != null) {
-            characterBase.GetComponent<IMovePosition> ().SetPosition (target.position, leftDownPosition, rightUpPosition);
-        } else {
-            //如果没有路径就返回Idle状态
-            stateMachine.ChangeState (StateType.Idle);
+        public override void EnterState (FSMBase fsm) {
+            base.EnterState (fsm);
+            //设置速度
+            fsm.characterStatus.SetMoveSpeed (fsm.runPercent);
+            //播放待机动画
+            //            fsm.animator.SetBool()
         }
-    }
-    public void SetLimitArea (Vector3 leftDownPosition, Vector3 rightUpPosition) {
-        randomDistanceX = (rightUpPosition.x - leftDownPosition.x) / 2;
-        randomDistanceY = (rightUpPosition.y - leftDownPosition.y) / 2;
-    }
-    public void SetArrivedAtPositionMinDistance (float minDistance) {
-        arrivedAtPositionMinDistance = minDistance;
+        public override void ActionState (FSMBase fsm) {
+            base.ActionState (fsm);
+            //不断更新抵达目标位置的路径表
+            //获取位置
+            List<PathNode> pathList = fsm.GetPath (fsm.targetTF.position);
+            //如果有路径而且不为路径长度不为1（1为自身位置）
+            if (pathList != null && pathList.Count > 1) {
+                //移动方法的路径列表设置
+                fsm.GetComponent<IMovePosition> ().SetPathList (pathList);
+                //开始移动
+                fsm.GetComponent<IMovePosition> ().PathMoving ();
+            }
+        }
+        public override void ExitState (FSMBase fsm) {
+            //停止移动
+            fsm.GetComponent<IMovePosition> ().StopPosition ();
+        }
     }
 }

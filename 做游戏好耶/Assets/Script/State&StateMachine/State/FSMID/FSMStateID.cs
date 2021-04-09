@@ -12,10 +12,15 @@ namespace EveryFunc.FSM {
         //闲置
         Idle,
         //追击
-        Pursuit,
+        Chase,
         //攻击
         Attack,
         //巡逻
-        Patrol
+        Patrol,
+        //受伤
+        Hurted,
+        //人物状态
+        Gaming,
+        UI
     }
 }

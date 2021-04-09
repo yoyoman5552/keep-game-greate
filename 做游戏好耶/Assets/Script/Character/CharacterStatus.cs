@@ -11,12 +11,30 @@ namespace EveryFunc.Character {
             //角色属性的一些变量的初始化和赋值
             data.Init (this);
         }
-        public void SetStateActive (bool state) {
 
-        }
         //生命值减少
         public void TakenDamage (int damage) {
+            if (data.isHurted) return;
             data.health -= damage;
+            GetHurted ();
+        }
+        //翻转朝向
+        public void Flip (float dir) {
+            //如果dir为0就保持原样
+            if (dir == 0) return;
+            if (dir < 0) dir = -1;
+            else dir = 0;
+            data.selfTexture.eulerAngles = new Vector3 (0, 180 * dir, 0);
+        }
+        private void GetHurted () {
+            //受到伤害，人物变红
+            data.isHurted = true;
+            data.material.SetFloat ("_FlashAmount", 1);
+            data.textureTime=ConstantList.HURTCOLORTIME;
+            Invoke ("HurtedOutDelay", data.HurtedTime);
+        }
+        private void HurtedOutDelay () {
+            data.isHurted = false;
         }
         //生命值增加
         public void TakenHealing (int heal) {
@@ -32,9 +50,21 @@ namespace EveryFunc.Character {
             //恢复移动速度
             data.moveSpeed = data.Speed;
         }
-        //
-        public IEnumerator BuffActiveDelay (float delay, bool state) {
-            yield return new WaitForSeconds (delay);
+        private IEnumerator HurtedColorOutDelay(float delay){
+            while(delay>0){
+                
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+        private void Update () {
+            //如果人物没有受到伤害
+            if (data.textureTime <= 0) {
+                //人物取消变红
+                data.material.SetFloat ("_FlashAmount", 0);
+
+            } else {
+                data.textureTime -= Time.deltaTime;
+            }
         }
     }
 }
